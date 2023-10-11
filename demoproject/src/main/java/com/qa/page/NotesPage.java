@@ -16,15 +16,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.qa.utility.ElementUtility;
 import com.qa.utility.WaitUtility;
 
-
-
 public class NotesPage {
 	WebDriver driver;
 	ElementUtility elementutility;
 	WaitUtility waitutility;
-	String notetitlecolumn="2";
-	
-	@FindBy(xpath="//*[text()='Notes']")
+	String notetitlecolumn = "2";
+
+	@FindBy(xpath = "//*[text()='Notes']")
 	WebElement addNote;
 	@FindBy(xpath = "//a[@class='btn btn-default']")
 	WebElement typeNote;
@@ -32,9 +30,9 @@ public class NotesPage {
 	WebElement title;
 	@FindBy(xpath = "//textarea[@name='description']")
 	WebElement description;
-	@FindBy(xpath = "//input[@class='select2-input select2-default']")
+	@FindBy(xpath = "//div[@id='s2id_note_labels']//ul//li//input")
 	WebElement label;
-	@FindBy(xpath = "//li[@class='select2-search-choice']")
+	@FindBy(xpath = "//ul[@class='select2-results']//child::li[1]//div")
 	WebElement labelChoice;
 	@FindBy(xpath = "//button[@class='btn btn-default upload-file-button pull-left btn-sm round dz-clickable']")
 	WebElement uploadFile;
@@ -64,9 +62,9 @@ public class NotesPage {
 	WebElement closebuttonf;
 
 	// delete note
-	@FindBy(xpath = "//table/tbody/tr[3]/td[2]/a")
+	@FindBy(xpath = "//table[@id='note-table']//tbody//tr[1]//td[2]")
 	WebElement noteToDelete;
-	@FindBy(xpath = "//table/tbody/tr[3]/td[4]/a[2]")
+	@FindBy(xpath = "//table[@id='note-table']//tbody//tr[1]//td[4]//a[2]")
 	WebElement deleteNote;
 	@FindBy(id = "confirmDeleteButton")
 	WebElement confirmDelete;
@@ -74,12 +72,22 @@ public class NotesPage {
 	WebElement cancelButton;
 	@FindBy(xpath = "//div[text()='The record has been deleted.']")
 	WebElement deleteNotification;
+	@FindBy(xpath = "//td[@class='dataTables_empty']")
+	WebElement noRecordText;
 
-	// select display count
-//	@FindBy(xpath = "//div[@class='select2-result-label']")
-//	WebElement count;
+	// Number of data per page
+	@FindBy(id = "select2-results-2")
+	WebElement selectDropdown;
+	@FindBy(className = "select2-arrow")
+	WebElement selectArrow;
+	@FindBy(xpath = "//ul[@id='select2-results-2']//li[2]//div")
+	WebElement number;
+	//@FindBy(xpath = "//div[@class='select2-result-label']")
+	//WebElement count;
 	@FindBy(xpath = "//div[@class='select2-drop-mask']")
 	WebElement clickCount;
+	@FindBy(xpath = "//span[@id='select2-chosen-2']")
+	WebElement countShown;
 
 	// hide column
 	@FindBy(xpath = "//button[@class='btn btn-default column-show-hide-popover ml15']")
@@ -102,15 +110,13 @@ public class NotesPage {
 		elementutility.doClick(addNote);
 		elementutility.doClick(typeNote);
 		elementutility.doSendKeys(title, header);
-		elementutility.doSendKeys(description,note);
-		// label.sendKeys("Important");
-		//elementutility.doSendKeys(uploadFile, "C:\\Users\\hpriy\\OneDrive\\Pictures\\reviewProgram1.png"); // add an
-																											// extra '\'
-																											// after
-																											// copying
-																											// path
+		elementutility.doSendKeys(description, note);
+		elementutility.pageScroll(label);
+		elementutility.doClick(label);
+		waitutility.doWait(labelChoice);
+		elementutility.doClick(labelChoice);
 		submit.submit();
-		
+		elementutility.doClick(closebuttonf);
 	}
 
 	public String doSearch(String notes) {
@@ -118,93 +124,67 @@ public class NotesPage {
 		elementutility.doClick(addNote);
 		waitutility.doWait(search);
 		elementutility.doSendKeys(search, notes);
-		
-		By locator=By.xpath("//table[@id='note-table']//tbody//tr//td//a[contains(text(),'"+notes+"')]");
-
+		By locator = By.xpath("//table[@id='note-table']//tbody//tr//td//a[contains(text(),'" + notes + "')]");
 		waitutility.waitForVisibilty(locator);
-
-		List<WebElement> notetable=driver.findElements(By.xpath("//table[@id='note-table']//tbody//tr//td//a[contains(text(),'"+notes+"')]"));
-
+		List<WebElement> notetable = driver.findElements(locator);
 		waitutility.waitForVisibilty(notetable);
-
-		int row=elementutility.getTableDataRowCount(notetable, notes);
-
-		String actualmsg="";
-		
-
-		if(row!=0) 
-
+		int row = elementutility.getTableDataRowCount(notetable, notes);
+		String actualmsg = "";
+		if (row != 0)
 		{
-
-			WebElement tableRow=driver.findElement(By.xpath("//table[@id='note-table']//tbody//tr["+row+"]//td["+notetitlecolumn+"]"));
-
-			actualmsg=tableRow.getText();
-
-			System.out.println("Searched Element : " +actualmsg);
-			
-
+			WebElement tableRow = driver.findElement(
+					By.xpath("//table[@id='note-table']//tbody//tr[" + row + "]//td[" + notetitlecolumn + "]"));
+			actualmsg = tableRow.getText();
+			System.out.println("Searched Element : " + actualmsg);
 		}
-
 		return actualmsg;
-	
-		
-		
-//		String result = searchResult.getText();
-//		System.out.println(result);
-//		elementutility.doClick(searchResult);
-//		return savedContent.getText();
-//		//elementutility.doClick(closeResultButton);
-		
 	}
 
 	public String doSearchNoRecord(String notes) {
 		elementutility.doClick(addNote);
 		elementutility.doSendKeys(search, notes);
 		return noRecord.getText();
-		
+
 	}
 
 	public void editNotes(String editText, String searchNote1) {
-//		elementutility.doClick(addNote);
-//		elementutility.doSendKeys(search, searchNote1);
-		
+		//elementutility.doClick(addNote);
+		//elementutility.doSendKeys(search, searchNote1);
 		elementutility.doClick(editNote);
 		elementutility.doClear(title);
 		elementutility.doSendKeys(title, editText);
 		elementutility.doClick(submit);
 		waitutility.doWait(closebuttonf);
 		elementutility.doClick(closebuttonf);
-//		return doSearch(editText);
-//		return edittedNote.getText();
+		//return doSearch(editText);
+		//return edittedNote.getText();
 	}
 
-	public String deleteNote() {
+	public String deleteNote(String deleteNote2) {
 		elementutility.doClick(addNote);
+		waitutility.doWait(search);
+		elementutility.doSendKeys(search, deleteNote2);
 		String header = noteToDelete.getText();
 		elementutility.doClick(deleteNote);
 		elementutility.doClick(confirmDelete);
-		//elementutility.doClick(cancelButton);
+		// elementutility.doClick(cancelButton);
 		waitutility.doWait(deleteNotification);
 		System.out.println(deleteNotification.getText());
-		return header;
+		System.out.println(header);
+		waitutility.doWait(noRecordText);
+		return noRecordText.getText();
 	}
 
-	public void selectDisplayCount() {
+	public String selectDisplayCount() {
 		elementutility.doClick(addNote);
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-//		WebElement clickCount = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='select2-drop']")));
-		elementutility.doClick(clickCount);
-		WebElement count = wait.until(ExpectedConditions.elementToBeClickable(By.name("note-table_length")));
-		Select oselect = new Select(count);
-		oselect.selectByIndex(2);
-		List<WebElement> options = oselect.getOptions();
-		for (int i = 0; i < options.size(); i++) {
-			String optionsDisplay = options.get(i).getText();
-			System.out.println(optionsDisplay);
-		}
+		elementutility.doClick(selectArrow);
+		elementutility.doClick(number);
+		System.out.println(countShown.getText());
+		return countShown.getText();
 	}
 
 	public List<String> selectHideColumn() {
+
 		elementutility.doClick(addNote);
 		elementutility.doClick(hideButton);
 		List<String> optionName = new ArrayList<String>();
@@ -222,7 +202,7 @@ public class NotesPage {
 			headerName.add(name);
 		}
 		return headerName;
-		
+
 	}
 
 }

@@ -23,59 +23,48 @@ import com.qa.utility.ElementUtility;
 
 public class BaseTest {
 	WebDriver driver;
-    @Parameters({"browser"})
+
+	@Parameters({ "browser" })
 	@BeforeMethod(alwaysRun = true)
-	public void beforeMethod(@Optional ("chrome")String browser) {
+	public void beforeMethod(@Optional("chrome") String browser) {
 		if (browser.equalsIgnoreCase("chrome")) {
 			driver = new ChromeDriver();
 		} else if (browser.equalsIgnoreCase("edge")) {
 			driver = new EdgeDriver();
 		}
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(200));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(200));// wait before each line of code
 		driver.get(ElementUtility.getPropertyValue("baseURL"));
 		driver.manage().window().maximize();
-		//LoginDemoPage lpage = new LoginDemoPage(driver);
-		//lpage.doLogin("admin@admin.com", "12345678");
 	}
 
 	@AfterMethod
 	public void takeScreenShotOnFailure(ITestResult iTestResult) throws IOException {
 		if (iTestResult.getStatus() == ITestResult.FAILURE) {
 			takeScreenShotOnFailure(iTestResult.getName());
-
 		}
-		//driver.quit();
+		// driver.quit();
 	}
-	
+
 	public String takeScreenShotOnFailure(String name) throws IOException {
 		String dateName = new SimpleDateFormat("yyyy_MM_dd_hh_mm").format(new Date());
-
-
 		File source = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-
-		String destination =Constants.screenShot_path + name + dateName + ".png";
-
-
-		File finalDestination = new File(destination);
-
+		String destination = Constants.screenShot_path + name + dateName + ".png";
+     	File finalDestination = new File(destination);
 		FileUtils.copyFile(source, finalDestination);
 		return destination;
-		
+
 		/*
-		 * when each test is executed ,we need to check whether the test is failed/passed
-if failed then take the screenshot
-------------------------------------------
-afterMethod
-
-ITestResult-Interface
-getStatus()-return status of the method
-getName()-returns the name of @test that got executed last
-
-
-methodnameyyyy_MM_dd_hh_mm
---------------------------
-constants -give the constants of the project.
-screenshot name = path from constant + methodnameyyyy_MM_dd_hh_mm + .png
+		 * when each test is executed ,we need to check whether the test is
+		 * failed/passed if failed then take the screenshot
+		 * ------------------------------------------ afterMethod
+		 * 
+		 * ITestResult-Interface getStatus()-return status of the method
+		 * getName()-returns the name of @test that got executed last
+		 * 
+		 * 
+		 * methodnameyyyy_MM_dd_hh_mm -------------------------- constants -give the
+		 * constants of the project. screenshot name = path from constant +
+		 * methodnameyyyy_MM_dd_hh_mm + .png
 		 */
 	}
 }

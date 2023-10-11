@@ -1,6 +1,5 @@
 package com.qa.page;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -37,7 +36,7 @@ public class ClientsPage {
 	WebElement vatNumberField;
 	@FindBy(xpath = "//input[@id='s2id_autogen6']")
 	WebElement clientGroupField;
-	@FindBy(xpath = "//input[@id='s2id_autogen5_search']")
+	@FindBy(xpath = "//form[@id='client-form']//following::div[@class='form-group'][11]//child::div[@id='s2id_currency']")
 	WebElement currencyField;
 	@FindBy(xpath = "//li[@role='presentation'][68]")
 	WebElement currencySelect;
@@ -47,6 +46,8 @@ public class ClientsPage {
 	WebElement pageClick;
 	@FindBy(xpath = "//button[@type='submit']")
 	WebElement fornSubmitButton;
+	@FindBy(xpath = "//button[@class='close']")
+	WebElement closeButton;
 	@FindBy(xpath = "//div[@id='client-table_filter']//child::label[1]//input")
 	WebElement searchClients;
 	@FindBy(xpath = "//table[@id='client-table']//tbody//tr[1]//td[2]")
@@ -80,14 +81,16 @@ public class ClientsPage {
 		elementutility.doSendKeys(vatNumberField, vat);
 		elementutility.doClick(pageClick);
 		//elementutility.pageScroll(currencyField);
-//		waitutility.doWait(clientGroupField);
-//		elementutility.doSendKeys(clientGroupField, cGroup);	
+		//waitutility.doWait(clientGroupField);
+		//elementutility.doSendKeys(clientGroupField, cGroup);	
 		elementutility.pageScroll(checkBox);
 		waitutility.doWait(checkBox);
 		elementutility.doClick(checkBox);
-		//elementutility.doClick(currencyField);
-		//elementutility.doClick(currencySelect);
+		elementutility.doClick(currencyField);
+		elementutility.pageScroll(currencySelect);
+		elementutility.doClick(currencySelect);
 		elementutility.doClick(fornSubmitButton);
+		elementutility.doClick(closeButton);
 		waitutility.doWait(searchClients);
 		elementutility.doClick(searchClients);
 		elementutility.doSendKeys(searchClients, cName);

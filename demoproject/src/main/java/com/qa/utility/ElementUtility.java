@@ -29,6 +29,11 @@ public class ElementUtility {
 		element.getText();
 	}
 	
+	public void doJavaScriptClick(String id) {
+		JavascriptExecutor js=(JavascriptExecutor)driver;//typecast driver to javascriptexecutor
+		js.executeScript("document.getElementById('"+id+"').click();");
+	}
+	
 	public void pageScroll(WebElement element) {
 		JavascriptExecutor js=(JavascriptExecutor)driver;//typecast driver to javascriptexecutor
 		js.executeScript("window.scrollBy(0,500)");//vertical down 500 pixel

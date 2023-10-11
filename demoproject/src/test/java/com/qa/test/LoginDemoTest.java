@@ -3,6 +3,8 @@ package com.qa.test;
 import java.io.IOException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
 import com.qa.constants.Constants;
 import com.qa.page.LoginDemoPage;
 import com.qa.utility.CRMExcelRead;
@@ -12,31 +14,21 @@ import org.testng.annotations.Parameters;
 
 public class LoginDemoTest extends BaseTest {
 
-	 @Parameters({"userName","password"})
-	// public void verifyLoginDemoPage(@Optional("admin@admin.com")String
-	// userName,@Optional("12345678") String password)throws InterruptedException {
-
+	@Parameters({"userName","password"})
 	@Test(dataProvider = "dpLogin")
 	public void verifyLoginDemoPage(String emailId, String password){
 		LoginDemoPage logindemopage = new LoginDemoPage(driver);
-		logindemopage.doLogin(emailId, password);
-
+		boolean f =logindemopage.doLogin(emailId, password);
+		SoftAssert softassert=new SoftAssert();
+		softassert.assertTrue(f);
+		softassert.assertAll();
 	}
 
-/*	@DataProvider(name = "SearchProvider")
-	public Object[][] getDataFromDataprovider() {
-		return new Object[][] { { "admin@admin.com", "12345678" }, };
-
-	}*/
 
 	@DataProvider
-
 	public Object[][] dpLogin() throws InvalidFormatException, IOException {
-
 		Object[][] data = CRMExcelRead.getDataFromExcel(Constants.testData,"cred");
-		
 		return data;
-
 	}
 
 }

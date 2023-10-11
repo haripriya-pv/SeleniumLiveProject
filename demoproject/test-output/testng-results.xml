@@ -2,12 +2,12 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2023-10-03T03:27:52 IST" name="Default suite" finished-at="2023-10-03T03:28:04 IST" duration-ms="11508">
+  <suite started-at="2023-10-11T20:15:00 IST" name="Default suite" finished-at="2023-10-11T20:15:08 IST" duration-ms="7497">
     <groups>
     </groups>
-    <test started-at="2023-10-03T03:27:52 IST" name="Default test" finished-at="2023-10-03T03:28:04 IST" duration-ms="11508">
+    <test started-at="2023-10-11T20:15:00 IST" name="Default test" finished-at="2023-10-11T20:15:08 IST" duration-ms="7497">
       <class name="com.qa.test.NotesTest">
-        <test-method is-config="true" signature="beforeMethod(java.lang.String)[pri:0, instance:com.qa.test.NotesTest@536f2a7e]" started-at="2023-10-03T03:27:52 IST" name="beforeMethod" finished-at="2023-10-03T03:27:58 IST" duration-ms="5703" status="PASS">
+        <test-method is-config="true" signature="beforeMethod(java.lang.String)[pri:0, instance:com.qa.test.NotesTest@536f2a7e]" started-at="2023-10-11T20:15:00 IST" name="beforeMethod" finished-at="2023-10-11T20:15:05 IST" duration-ms="4424" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -18,15 +18,15 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethod -->
-        <test-method signature="verifyEditNote()[pri:4, instance:com.qa.test.NotesTest@536f2a7e]" started-at="2023-10-03T03:27:58 IST" name="verifyEditNote" finished-at="2023-10-03T03:28:04 IST" duration-ms="5713" status="PASS">
+        <test-method signature="verifyHideColumn()[pri:7, instance:com.qa.test.NotesTest@536f2a7e]" started-at="2023-10-11T20:15:05 IST" name="verifyHideColumn" finished-at="2023-10-11T20:15:08 IST" duration-ms="3004" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- verifyEditNote -->
-        <test-method is-config="true" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:com.qa.test.NotesTest@536f2a7e]" started-at="2023-10-03T03:28:04 IST" name="takeScreenShotOnFailure" finished-at="2023-10-03T03:28:04 IST" duration-ms="0" status="PASS">
+        </test-method> <!-- verifyHideColumn -->
+        <test-method is-config="true" signature="takeScreenShotOnFailure(org.testng.ITestResult)[pri:0, instance:com.qa.test.NotesTest@536f2a7e]" started-at="2023-10-11T20:15:08 IST" name="takeScreenShotOnFailure" finished-at="2023-10-11T20:15:08 IST" duration-ms="1" status="PASS">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=verifyEditNote status=SUCCESS method=NotesTest.verifyEditNote()[pri:4, instance:com.qa.test.NotesTest@536f2a7e] output={null}]]]>
+                <![CDATA[[TestResult name=verifyHideColumn status=SUCCESS method=NotesTest.verifyHideColumn()[pri:7, instance:com.qa.test.NotesTest@536f2a7e] output={null}]]]>
               </value>
             </param>
           </params>

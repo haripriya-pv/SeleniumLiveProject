@@ -8,17 +8,17 @@ import com.qa.page.MessagesPage;
 import com.qa.utility.ElementUtility;
 
 public class MessagesTest extends BaseTest {
-	
+
 	@Test(priority = 1)
 	public void verifyComposeMessage() {
 		LoginDemoPage lpage = new LoginDemoPage(driver);
 		lpage.doLogin(ElementUtility.getPropertyValue("username"), ElementUtility.getPropertyValue("password"));
 		MessagesPage messagespage = new MessagesPage(driver);
 		messagespage.composeMessage("second message");
-		String actualSubject=messagespage.searchSendItems("second");
+		String actualSubject = messagespage.searchSendItems("second");
 		String expected = "Subject: second message";
 		Assert.assertEquals(actualSubject, expected);
-		
+
 	}
 
 	@Test(priority = 2)
@@ -36,7 +36,7 @@ public class MessagesTest extends BaseTest {
 		lpage.doLogin(ElementUtility.getPropertyValue("username"), ElementUtility.getPropertyValue("password"));
 		MessagesPage messagespage = new MessagesPage(driver);
 		String replyContent = "it's my second demo reply";
-		String actualNote =messagespage.sendReply("second",replyContent );
-		Assert.assertEquals(actualNote,replyContent);
+		String actualNote = messagespage.sendReply("second", replyContent);
+		Assert.assertEquals(actualNote, replyContent);
 	}
 }
